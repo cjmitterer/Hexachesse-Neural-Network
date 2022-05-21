@@ -62,9 +62,7 @@ def terminalWhite(s):
                 return False
             if(i - 4 >= 1 and s[i-4] == -1):
                 return False
-    return True
     """
-    #My shame
     for i in range(len(s)):
         for j in range(len(s[0])):
             if s[i][j] == 1:
@@ -75,6 +73,8 @@ def terminalWhite(s):
                     return False
     return True
     """
+    return True
+
 # Determines if the game can be continued or not
 # Inputs:
 # s: the current game state
@@ -83,7 +83,7 @@ def terminalWhite(s):
 def isTerminal(s):
     return terminalWhite(s) and terminalBlack(s)
 
-
+# @TODO FIX it
 def actions(s):
     legalMoves = []
     if isTerminal(s):
@@ -93,19 +93,42 @@ def actions(s):
             if (i -3 >= 1 and s[i-3] == 0):
                 legalMoves.append("advance", i//3, i%3)
             if (i - 2 >= 1 and s[i-2] == -1):
-                legalMoves.append("attack-right", i//3, i%3)
+                legalMoves.append("attack-right", i//3, i%3)        # Fix the logic later but its "fine" now
             if(i - 4 >= 1 and s[i-4] == -1):
-                return legalMoves.append("attack-left", i//3, i%3)
+                legalMoves.append("attack-left", i//3, i%3)         # Fix the logic later but its "fine" now
         return legalMoves
     if toMove(s) == "black":
-        return None
-
-    # Illegal to get here
-    return "ERROR"
+        for i in range(1, len(s)):
+            if (i + 3 <= 9 and s[i+3] == 0):
+                legalMoves.append("advance", i//3, i%3)
+            if (i + 2 <= 9 and s[i+2] == 1):
+                legalMoves.append("attack-left", i//3, i%3)         # Fix the logic later but its "fine" now
+            if (i + 4 <= 9 and s[i+4] == 1):
+                legalMoves.append("attack-right", i//3, i%3)        # Fix the logic later but its "fine" now
+    return legalMoves
 
 
 def result(s, a):
-    return None
+    newState = s
+    listActions = a.spit()      # [0] is the action [1] is the row [2] is the column
+    newState[a[1]+a[2]] = 0         # Sets the old position to 0
+    # ITS NOT JUST a[1] + a[2], I'll do the math later
+    if(toMove(s) == "white"):
+        if listActions[0] == "advance":
+            newState[]
+        elif listActions[0] == "attack-left":
+
+        elif listActions[0] == "attack-right":
+
+
+    elif(toMove(s) == "black"):
+        if listActions[0] == "advance":
+
+        elif listActions[0] == "attack-left":
+
+        elif listActions[0] == "attack-right":
+
+    return newState
 
 
 def utility(s):
